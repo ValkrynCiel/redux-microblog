@@ -39,19 +39,31 @@ class BlogForm extends Component {
 
   render() {
     return (
-      <form className="BlogForm" onSubmit={ this.handleSubmit }>
-          <label htmlFor='title'>title</label>
-          <input id='title' name='title' value={ this.state.title } onChange={ this.handleChange } />
+      <div className="d-flex align-items-center flex-column">
+        <div className="col-4">
+          {this.props.triggerAdd ? <h1>Add New Post</h1> : <h1>Edit Post</h1>}
+        </div>
+        <form className="BlogForm col-4" onSubmit={ this.handleSubmit }>
 
-          <label htmlFor='description'>description</label>
-          <input id='description' name='description' value={ this.state.description } onChange={ this.handleChange } />
+          <div className="form-group">
+            <label htmlFor='title'>Title:</label><br/>
+            <input className="col-12" id='title' name='title' value={ this.state.title } onChange={ this.handleChange } />
+          </div>
 
-          <label htmlFor='body'>body</label>
-          <input id='body' name='body' value={ this.state.body } onChange={ this.handleChange } />
+          <div className="form-group">
+            <label htmlFor='description'>Description:</label><br/>
+            <input className="col-12" id='description' name='description' value={ this.state.description } onChange={ this.handleChange } />
+          </div>
 
-          <button>Submit</button>
-          <Link to='/'>Cancel</Link>
-      </form>
+          <div className="form-group">
+            <label htmlFor='body'>Body:</label><br/>
+            <textarea className="col-12" id='body' name='body' value={ this.state.body } onChange={ this.handleChange } />
+          </div>
+
+          <button className="btn btn-primary">Submit</button>
+          <Link className="btn btn-secondary"to='/'>Cancel</Link>
+        </form>
+      </div>
     );
   }
 }

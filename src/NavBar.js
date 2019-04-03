@@ -4,17 +4,19 @@ import { NavLink } from 'react-router-dom';
 
 class NavBar extends Component {
   render() {
-    const activeStyle={
+    const activeStyle = {
       fontWeight: 'bold',
       color: 'gold',
     }
 
     return (
-      <nav className="NavBar">
-        <h1>Microblog</h1>
+      <nav className="NavBar jumbotron col-8">
+        <h1 className="display-3">Microblog</h1>
         <p>Get in the Rithm of blogging!</p>
-        <NavLink exact to='/' activeStyle={activeStyle}>Blog</NavLink>
-        <NavLink exact to='/new' activeStyle={activeStyle}>Add a new post</NavLink> 
+        <div className="col-2 d-flex justify-content-between p-0">
+          <NavLink exact to='/' activeStyle={activeStyle}>Blog</NavLink>
+          <NavLink exact to='/new' activeStyle={activeStyle}>Add a new post</NavLink>
+        </div>
       </nav>
     );
   }

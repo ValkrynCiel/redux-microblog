@@ -43,7 +43,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar />
+        <div className="NavBar d-flex justify-content-center">
+          <NavBar />
+        </div>
         <Switch>
           <Route exact path='/new' render={(rtp) => <BlogForm triggerAdd={ this.addPost } history={ rtp.history }/>} />
           <Route exact path='/' render={() => <HomePage posts={ this.state.posts } />} />
