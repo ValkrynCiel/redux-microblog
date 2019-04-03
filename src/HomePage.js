@@ -15,7 +15,7 @@ class HomePage extends Component {
     const postArr = [];
     for(let id in this.props.posts){
       postArr.push(
-        <BlogCard id={id} post={this.props.posts.id}/>
+        <BlogCard key={id} id={id} post={this.props.posts[id]}/>
       )
     }
     return postArr;

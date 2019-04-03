@@ -32,8 +32,8 @@ class BlogForm extends Component {
       this.props.triggerAdd(this.state);
       this.props.history.push('/');
     } else {
-      this.props.triggerEdit();
-      this.props.history.push(`/${this.props.postId}`);
+      this.props.triggerEdit(this.props.id, this.state);
+      this.props.handleResetView();
     }
   }
 

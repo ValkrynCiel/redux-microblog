@@ -11,8 +11,10 @@ class NavBar extends Component {
 
     return (
       <nav className="NavBar">
-          <NavLink exact to='/new' activeStyle={activeStyle} />
-          <NavLink exact to='/' activeStyle={activeStyle} />
+        <h1>Microblog</h1>
+        <p>Get in the Rithm of blogging!</p>
+        <NavLink exact to='/' activeStyle={activeStyle}>Blog</NavLink>
+        <NavLink exact to='/new' activeStyle={activeStyle}>Add a new post</NavLink> 
       </nav>
     );
   }
