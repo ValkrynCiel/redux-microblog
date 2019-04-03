@@ -29,7 +29,7 @@ class BlogForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     if(this.props.triggerAdd){
-      this.props.triggerAdd();
+      this.props.triggerAdd(this.state);
       this.props.history.push('/');
     } else {
       this.props.triggerEdit();
