@@ -37,6 +37,14 @@ class BlogForm extends Component {
     }
   }
 
+  showCancelEdit() {
+    return <button className="m-1 btn btn-secondary" onClick={this.props.handleResetView}>Cancel</button>
+  }
+
+  showCancelAdd() {
+    return <Link className="m-1 btn btn-secondary"to='/'>Cancel</Link>
+  }
+
   render() {
     return (
       <div className="d-flex align-items-center flex-column col-10">
@@ -61,8 +69,8 @@ class BlogForm extends Component {
           </div>
 
           <button className="m-1 btn btn-primary">Submit</button>
-          <Link className="m-1 btn btn-secondary"to='/'>Cancel</Link>
         </form>
+          { this.props.triggerAdd ? this.showCancelAdd() : this.showCancelEdit() }
       </div>
     );
   }

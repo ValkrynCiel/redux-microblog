@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import uuid from 'uuid/v4';
 import NavBar from './NavBar';
-import BlogForm from './BlogForm';
+import BlogPostForm from './BlogPostForm';
 import HomePage from './HomePage';
 import BlogPost from './BlogPost';
 // import './App.css';
@@ -23,6 +23,7 @@ class App extends Component {
   addPost(postObj) {
     const id = uuid();
     const newPost = { ...postObj, comments: [] };
+
     this.setState({
       posts: { ...this.state.posts, [id]: newPost }
     });
@@ -31,37 +32,41 @@ class App extends Component {
   editPost(id, postObj) {
     const comments = this.state.posts[id].comments;
     const newPost = { ...postObj, comments };
+
     this.setState({
       posts: { ...this.state.posts, [id]: newPost },
     });
   }
 
-  deletePost(id) {
+  deletePost(postId) {
     const newPostState = { ...this.state.posts }
-    delete newPostState[id];
+    delete newPostState[postId];
 
     this.setState({
       posts: newPostState
     })
   }
 
-  addComment(id, comment) {
-    const post = this.state.posts[id];
+  addComment(postId, comment) {
+    const post = this.state.posts[postId];
+
     const newComments = [...post.comments,
-    { text: comment, id: uuid() }];
+    {
+      text: comment,
+      id: uuid()
+    }];
+
     const newPost = { ...post, comments: newComments };
-    // post.comments.push({text: comment, id: uuid()});
-    // const newPostState = { ...this.state.posts, [id]: post };
-    this.setState({ posts: { ...this.state.posts, [id]: newPost } });
+
+    this.setState({ posts: { ...this.state.posts, [postId]: newPost } });
   }
 
-  deleteComment(id, commentId) {
-    const post = this.state.posts[id];
+  deleteComment(postId, commentId) {
+    const post = this.state.posts[postId];
     const newComments = post.comments.filter(c => c.id !== commentId);
     const newPost = { ...post, comments: newComments };
-    // post.comments = newCommentArray;
-    // const newPostState = { ...this.state.posts, [id]: post };
-    this.setState({ posts: { ...this.state.posts, [id]: newPost } });
+  
+    this.setState({ posts: { ...this.state.posts, [postId]: newPost } });
   }
 
   render() {
@@ -69,7 +74,7 @@ class App extends Component {
       <div className="App d-flex flex-column align-items-center">
         <NavBar />
         <Switch>
-          <Route exact path='/new' render={(rtp) => <BlogForm triggerAdd={this.addPost} history={rtp.history} />} />
+          <Route exact path='/new' render={(rtp) => <BlogPostForm triggerAdd={this.addPost} history={rtp.history} />} />
           <Route exact path='/' render={() => <HomePage posts={this.state.posts} />} />
           <Route exact path='/posts/:id' render={(rtp) => <BlogPost
             post={this.state.posts[rtp.match.params.id]}

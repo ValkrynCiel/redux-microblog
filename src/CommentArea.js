@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 // import './CommentArea.css';
 
 class CommentArea extends Component {
@@ -10,7 +9,6 @@ class CommentArea extends Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleChange(evt) {
@@ -22,24 +20,14 @@ class CommentArea extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     this.props.triggerAddComment(this.props.postId, this.state.text);
-    // if(this.props.triggerAdd){
-    //   this.props.triggerAdd(this.state);
-    //   this.props.history.push('/');
-    // } else {
-    //   this.props.triggerEdit(this.props.id, this.state);
-    //   this.props.handleResetView();
-    // }
+ 
     this.setState({text:''});
   }
-
-  // handleDelete() {
-  //   this.props.triggerDelete();
-  // }
-
+  
 
   renderComments() {
     return this.props.comments.map(comment =>
-      <div>
+    <div key={comment.id}>
         {comment.text}
         <button className="btn btn-danger m-1" onClick={ () => this.props.triggerDeleteComment(this.props.postId, comment.id) }> <i className="fas fa-trash-alt"></i> </button>
       </div>

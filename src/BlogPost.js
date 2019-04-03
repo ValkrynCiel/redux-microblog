@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import BlogForm from './BlogForm';
+import BlogPostForm from './BlogPostForm';
 import CommentArea from './CommentArea';
 // import './BlogCard.css';
 
@@ -38,7 +38,7 @@ class BlogPost extends Component {
                        triggerDeleteComment={
                          this.props.triggerDeleteComment}/>
           <div className='d-flex flex-column align-items-center'>
-            {this.state.showEditForm && <BlogForm title={ this.props.post.title }
+            {this.state.showEditForm && <BlogPostForm title={ this.props.post.title }
                                               description={ this.props.post.description }
                                               body={this.props.post.body}
                                               triggerEdit={this.props.triggerEdit}

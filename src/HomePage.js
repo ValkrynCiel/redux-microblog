@@ -3,15 +3,8 @@ import BlogCard from './BlogCard';
 // import './HomePage.css';
 
 class HomePage extends Component {
-//   constructor(props){
-//     super(props);
-//     this.state = {
-//       posts:{},
-//     }
-//     this.addPost = this.addPost.bind(this);
-//   }
 
-  renderPost() {
+  renderPosts() {
     const postArr = [];
     for(let id in this.props.posts){
       postArr.push(
@@ -22,7 +15,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const posts = this.renderPost();
+    const posts = this.renderPosts();
     return (
       <div className="HomePage col-8">
           {posts}
