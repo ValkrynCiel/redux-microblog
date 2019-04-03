@@ -6,7 +6,7 @@ class BlogCard extends Component {
 
   render() {
     return (
-      <div className="BlogCard card">
+      <div className="BlogCard card col-12 m-1">
         <Link to={`/posts/${this.props.id}`}>
           <div className="card-header">
             <h3>{this.props.post.title}</h3>

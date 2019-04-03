@@ -24,10 +24,8 @@ class HomePage extends Component {
   render() {
     const posts = this.renderPost();
     return (
-      <div className="d-flex justify-content-center">
-        <div className="HomePage d-flex flex-column justify-content-center col-8">
+      <div className="HomePage col-8">
           {posts}
-        </div>
       </div>
     );
   }

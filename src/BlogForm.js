@@ -39,7 +39,7 @@ class BlogForm extends Component {
 
   render() {
     return (
-      <div className="d-flex align-items-center flex-column">
+      <div className="d-flex align-items-center flex-column col-10">
         <div className="col-4">
           {this.props.triggerAdd ? <h1>Add New Post</h1> : <h1>Edit Post</h1>}
         </div>
@@ -60,8 +60,8 @@ class BlogForm extends Component {
             <textarea className="col-12" id='body' name='body' value={ this.state.body } onChange={ this.handleChange } />
           </div>
 
-          <button className="btn btn-primary">Submit</button>
-          <Link className="btn btn-secondary"to='/'>Cancel</Link>
+          <button className="m-1 btn btn-primary">Submit</button>
+          <Link className="m-1 btn btn-secondary"to='/'>Cancel</Link>
         </form>
       </div>
     );
