@@ -21,21 +21,21 @@ class App extends Component {
   }
 
   addPost(postObj) {
-    const id = uuid();
-    const newPost = { ...postObj, comments: [] };
+    const id = uuid(); /// UUID NEEDS TO BE USED IN COMPONENT
+    // const newPost = { ...postObj, comments: [] };
 
-    this.setState({
-      posts: { ...this.state.posts, [id]: newPost }
-    });
+    // this.setState({
+    //   posts: { ...this.state.posts, [id]: newPost }
+    // });
   }
 
   editPost(id, postObj) {
-    const comments = this.state.posts[id].comments;
-    const newPost = { ...postObj, comments };
+    // const comments = this.state.posts[id].comments;
+    // const newPost = { ...postObj, comments };
 
-    this.setState({
-      posts: { ...this.state.posts, [id]: newPost },
-    });
+    // this.setState({
+    //   posts: { ...this.state.posts, [id]: newPost },
+    // });
   }
 
   deletePost(postId) {
