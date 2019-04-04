@@ -1,32 +1,50 @@
 import React, { Component } from 'react';
 import BlogCard from './BlogCard';
 import { connect } from 'react-redux';
+import { getPostTitlesFromApi } from './actions';
 // import './HomePage.css';
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+    }
+  }
+
+  componentDidMount() {
+    this.props.getPostTitlesFromApi();
+    this.setState({ isLoading: false });
+  }
 
   renderPosts() {
-    const postArr = [];
-    for(let id in this.props.posts){
-      postArr.push(
-        <BlogCard key={id} id={id} post={this.props.posts[id]}/>
+    return this.props.titles.map( t =>
+      <BlogCard key={t.id}
+                id={t.id}
+                title={t.title}
+                description={ t.description }/>
       )
-    }
-    return postArr;
   }
 
   render() {
-    const posts = this.renderPosts();
+    const titles = this.renderPosts();
     return (
       <div className="HomePage col-8">
-          {posts}
+        { this.state.isLoading
+        ? 'loading...'
+        : titles
+        }
       </div>
     );
   }
 }
 
 function mapStateToProps(reduxState) {
-  return { posts: reduxState.posts };
+  return { titles: reduxState.titles };
 }
 
-export default connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = {
+  getPostTitlesFromApi,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -1,4 +1,6 @@
 import {
+  LOAD_POST_TITLES,
+  LOAD_POST_DETAIL,
   ADD_COMMENT,
   DELETE_COMMENT,
   ADD_POST,
@@ -6,11 +8,23 @@ import {
   EDIT_POST
 } from "./actionTypes";
 
-const INITIAL_STATE = { posts: {} };
+const INITIAL_STATE = { post: {},
+                        seenPosts: {},
+                        titles:[] };
 
 function rootReducer(state = INITIAL_STATE, action) {
 
   switch (action.type) {
+
+    case LOAD_POST_TITLES: {
+      const { titles } = action.payload;
+      return {...state, titles};
+    }
+
+    case LOAD_POST_DETAIL: {
+      const { post } = action.payload;
+      return {...state, post};
+    }
 
     case ADD_COMMENT: {
       const { postId, comment } = action.payload;

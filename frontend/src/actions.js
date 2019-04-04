@@ -1,10 +1,42 @@
 import {
+  LOAD_POST_TITLES,
+  LOAD_POST_DETAIL,
   ADD_COMMENT,
   DELETE_COMMENT,
   ADD_POST,
   DELETE_POST,
   EDIT_POST
 } from "./actionTypes";
+import Api from './Api';
+
+export function getPostTitlesFromApi(){
+  return async function(dispatch) {
+    const titles = await Api.getPostTitles();
+    dispatch(gotPostTitles(titles));
+  }
+}
+
+function gotPostTitles(titles) {
+  return {
+    type: LOAD_POST_TITLES,
+    payload: { titles }
+  }
+}
+
+export function getPostDetailFromApi(postId){
+  return async function(dispatch) {
+    const post = await Api.getPostDetail(postId);
+    dispatch(gotPostDetail(post));
+  }
+}
+
+function gotPostDetail(post) {
+  return {
+    type: LOAD_POST_DETAIL,
+    payload: { post }
+  }
+}
+
 
 export function addComment(postId, comment) {
   return {

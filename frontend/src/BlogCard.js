@@ -9,10 +9,10 @@ class BlogCard extends Component {
       <div className="BlogCard card col-12 m-1">
         <Link to={`/posts/${this.props.id}`}>
           <div className="card-header">
-            <h3>{this.props.post.title}</h3>
+            <h3>{this.props.title}</h3>
           </div>
           <div className="card-body">
-            <p>{this.props.post.description}</p>
+            <p>{this.props.description}</p>
           </div>
         </Link>
       </div>

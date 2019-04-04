@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import BlogPostForm from './BlogPostForm';
 import CommentArea from './CommentArea';
 import { connect } from 'react-redux';
-import { deletePost, addComment, deleteComment } from './actions';
+import { deletePost, addComment, deleteComment, getPostDetailFromApi } from './actions';
 // import './BlogCard.css';
 
 class BlogPost extends Component {
@@ -11,10 +11,17 @@ class BlogPost extends Component {
   constructor(props){
     super(props);
     this.state = {
-      showEditForm: false
+      showEditForm: false,
+      isLoading: true,
     }
     this.toggleEditView = this.toggleEditView.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  async componentDidMount () {
+    await this.props.getPostDetailFromApi(this.props.id);
+    // setTimeout(() => this.setState({ isLoading: false }, () => console.log('is loading', this.state.isLoading)), 100);
+    this.setState({ isLoading: false });
   }
 
   toggleEditView() {
@@ -26,10 +33,15 @@ class BlogPost extends Component {
   }
 
   render() {
-    const post = this.props.posts[this.props.id];
+    const post = this.props.post;
     if (!post) return <Redirect to='/' />
     return (
       <div className="BlogPost col-8">
+        { this.state.isLoading
+        ?
+          "Loading..."
+        :
+          <>
           <h1>{ post.title }</h1>
           <p><i>{ post.description }</i></p>
           <p>{ post.body }</p>
@@ -54,19 +66,22 @@ class BlogPost extends Component {
                                               id={this.props.id}
                                               handleResetView={this.toggleEditView}/>}
           </div>
+          </>
+        }
       </div>
     );
   }
 }
 
 function mapStateToProps(reduxState) {
-  return { posts: reduxState.posts };
+  return { post: reduxState.post };
 }
 
 const mapDispatchToProps = {
   deletePost,
   addComment,
   deleteComment,
+  getPostDetailFromApi,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);
