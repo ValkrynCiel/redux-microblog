@@ -22,7 +22,6 @@ class BlogPost extends Component {
   }
 
   handleDelete() {
-    // this.props.triggerDelete(this.props.id);
     this.props.deletePost(this.props.id);
   }
 

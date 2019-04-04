@@ -32,13 +32,11 @@ class BlogPostForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     if(this.props.triggerAdd){
-      // this.props.triggerAdd(this.state);
       const post = {...this.state, comments:[]};
       const id = uuid();
       this.props.addPost(id, post);
       this.props.history.push('/');
     } else {
-      // this.props.triggerEdit(this.props.id, this.state);
       const post = this.state;
       const id = this.props.id;
       this.props.editPost(id, post);
@@ -55,16 +53,17 @@ class BlogPostForm extends Component {
   }
 
   render() {
+    const unfinished = this.state.title.length === 0;
     return (
       <div className="d-flex align-items-center flex-column col-10">
         <div className="col-4">
           {this.props.triggerAdd ? <h1>Add New Post</h1> : <h1>Edit Post</h1>}
         </div>
-        <form className="BlogForm col-4" onSubmit={ this.handleSubmit }>
+        <form className="BlogForm col-4">
 
           <div className="form-group">
             <label htmlFor='title'>Title:</label><br/>
-            <input className="col-12" id='title' name='title' value={ this.state.title } onChange={ this.handleChange } />
+            <input className="col-12" id='title' name='title' value={ this.state.title } onChange={ this.handleChange } placeholder="Required"/>
           </div>
 
           <div className="form-group">
@@ -77,9 +76,10 @@ class BlogPostForm extends Component {
             <textarea className="col-12" id='body' name='body' value={ this.state.body } onChange={ this.handleChange } />
           </div>
 
-          <button className="m-1 btn btn-primary">Submit</button>
-        </form>
+          <button disabled={ unfinished } onClick={ this.handleSubmit } className="m-1 btn btn-primary">Submit</button>
           { this.props.triggerAdd ? this.showCancelAdd() : this.showCancelEdit() }
+        </form>
+          
       </div>
     );
   }

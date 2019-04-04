@@ -6,7 +6,7 @@ class NavBar extends Component {
   render() {
     const activeStyle = {
       fontWeight: 'bold',
-      color: 'gold',
+      color: 'darkturquoise',
     }
 
     return (
