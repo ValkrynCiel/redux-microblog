@@ -1,7 +1,6 @@
 /*********** COMMENT ACTIONS *********/
 
-export const ADD_COMMENT = "ADD_COMMENT";
-export const DELETE_COMMENT = "DELETE_COMMENT";
+export const UPDATE_COMMENTS = "UPDATE_COMMENTS";
 
 
 /*********** POST ACTIONS *********/

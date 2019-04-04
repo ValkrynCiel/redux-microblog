@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import BlogPostForm from './BlogPostForm';
 import CommentArea from './CommentArea';
 import { connect } from 'react-redux';
-import { deletePost, addComment, deleteComment, getPostDetailFromApi } from './actions';
+import { deletePost, getPostDetailFromApi } from './actions';
 // import './BlogCard.css';
 
 class BlogPost extends Component {
@@ -20,7 +20,6 @@ class BlogPost extends Component {
 
   async componentDidMount () {
     await this.props.getPostDetailFromApi(this.props.id);
-    // setTimeout(() => this.setState({ isLoading: false }, () => console.log('is loading', this.state.isLoading)), 100);
     this.setState({ isLoading: false });
   }
 
@@ -54,10 +53,7 @@ class BlogPost extends Component {
             <i className="fas fa-trash-alt"></i>
           </button>
 
-          <CommentArea postId ={this.props.id}
-                       comments={post.comments}
-                       triggerAddComment={this.props.addComment}
-                       triggerDeleteComment={this.props.deleteComment}/>
+          <CommentArea />
 
           <div className='d-flex flex-column align-items-center'>
             {this.state.showEditForm && <BlogPostForm title={ post.title }
@@ -79,8 +75,6 @@ function mapStateToProps(reduxState) {
 
 const mapDispatchToProps = {
   deletePost,
-  addComment,
-  deleteComment,
   getPostDetailFromApi,
 }
 

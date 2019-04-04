@@ -1,11 +1,10 @@
 import {
   LOAD_POST_TITLES,
   LOAD_POST_DETAIL,
-  ADD_COMMENT,
-  DELETE_COMMENT,
   ADD_POST,
   DELETE_POST,
-  EDIT_POST
+  EDIT_POST,
+  UPDATE_COMMENTS
 } from "./actionTypes";
 
 const INITIAL_STATE = { post: {},
@@ -26,26 +25,10 @@ function rootReducer(state = INITIAL_STATE, action) {
       return {...state, post};
     }
 
-    case ADD_COMMENT: {
-      const { postId, comment } = action.payload;
-      const post = state.posts[postId];
-
-      const newComments = [...post.comments, comment];
-
-      const newPost = { ...post, comments: newComments };
-
-      return { ...state, posts: { ...state.posts, [postId]: newPost } };
-    }
-
-    case DELETE_COMMENT: {
-      const { postId, commentId } = action.payload;
-      const post = state.posts[postId];
-
-      const newComments = post.comments.filter(c => c.id !== commentId);
-      const newPost = { ...post, comments: newComments };
-
-      return { ...state, posts: { ...state.posts, [postId]: newPost } };
-
+    case UPDATE_COMMENTS: {
+      const { comments } = action.payload;
+      
+      return { ...state, post: {...state.post, comments} }
     }
 
     case ADD_POST: {

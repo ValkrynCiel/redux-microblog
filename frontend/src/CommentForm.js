@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import uuid from 'uuid/v4';
 // import './CommentForm.css';
 
 class CommentForm extends Component {
@@ -20,9 +19,7 @@ class CommentForm extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    const id = uuid();
-    const comment = {id, text: this.state.text};
-    this.props.triggerAddComment(this.props.postId, comment);
+    this.props.triggerAddComment(this.props.postId, this.state.text);
 
     this.setState({text:''});
   }

@@ -1,8 +1,7 @@
 import {
   LOAD_POST_TITLES,
   LOAD_POST_DETAIL,
-  ADD_COMMENT,
-  DELETE_COMMENT,
+  UPDATE_COMMENTS,
   ADD_POST,
   DELETE_POST,
   EDIT_POST
@@ -38,17 +37,26 @@ function gotPostDetail(post) {
 }
 
 
-export function addComment(postId, comment) {
-  return {
-    type: ADD_COMMENT,
-    payload: { postId, comment }
+export function addCommentToApi(postId, text) {
+  return async function(dispatch) {
+    await Api.addComment(postId, text);
+    const newComments = await Api.getComments(postId);
+    dispatch(updateComments(newComments));
   }
 }
 
-export function deleteComment(postId, commentId) {
+export function deleteCommentFromApi(postId, commentId) {
+  return async function(dispatch) {
+    await Api.deleteComment(postId, commentId);
+    const newComments = await Api.getComments(postId);
+    dispatch(updateComments(newComments));
+  }
+}
+
+function updateComments(comments) {
   return {
-    type: DELETE_COMMENT,
-    payload: { postId, commentId }
+    type: UPDATE_COMMENTS,
+    payload: { comments }
   }
 }
 
