@@ -12,8 +12,8 @@ class HomePage extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.getPostTitlesFromApi();
+  async componentDidMount() {
+    await this.props.getPostTitlesFromApi();
     this.setState({ isLoading: false });
   }
 

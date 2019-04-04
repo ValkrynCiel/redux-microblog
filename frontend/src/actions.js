@@ -2,9 +2,6 @@ import {
   LOAD_POST_TITLES,
   LOAD_POST_DETAIL,
   UPDATE_COMMENTS,
-  ADD_POST,
-  DELETE_POST,
-  EDIT_POST
 } from "./actionTypes";
 import Api from './Api';
 
@@ -60,23 +57,28 @@ function updateComments(comments) {
   }
 }
 
-export function addPost(postId, post) {
-  return {
-    type: ADD_POST,
-    payload: { postId, post }
-  }
+export function addPostToApi(post) {
+  return async function(dispatch) {
+    await Api.addPost(post);
+    const titles = await Api.getPostTitles();
+    dispatch(gotPostTitles(titles));
+  };
 }
 
-export function deletePost(postId) {
-  return {
-    type: DELETE_POST,
-    payload: { postId }
-  }
+export function deletePostFromApi(postId) {
+  return async function(dispatch) {
+    await Api.deletePost(postId);
+    const titles = await Api.getPostTitles();
+    dispatch(gotPostTitles(titles));
+  };
 }
 
-export function editPost(postId, post) {
-  return {
-    type: EDIT_POST,
-    payload: { postId, post }
-  }
+export function editPostInApi(postId, newPost) {
+  return async function(dispatch) {
+    await Api.editPost(postId, newPost);
+    const post = await Api.getPostDetail(postId);
+    const titles = await Api.getPostTitles();
+    dispatch(gotPostDetail(post))
+    dispatch(gotPostTitles(titles));
+  };
 }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import uuid from 'uuid/v4';
 import { connect } from 'react-redux';
-import { addPost, editPost } from './actions';
+import { addPostToApi, editPostInApi } from './actions';
 // import './BlogPostForm.css';
 
 class BlogPostForm extends Component {
@@ -32,14 +31,13 @@ class BlogPostForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     if(this.props.triggerAdd){
-      const post = {...this.state, comments:[]};
-      const id = uuid();
-      this.props.addPost(id, post);
+      const post = { ...this.state };
+      this.props.addPostToApi(post);
       this.props.history.push('/');
     } else {
       const post = this.state;
-      const id = this.props.id;
-      this.props.editPost(id, post);
+      const id = this.props.post.id;
+      this.props.editPostInApi(id, post);
       this.props.handleResetView();
     }
   }
@@ -102,12 +100,12 @@ class BlogPostForm extends Component {
 }
 
 function mapStateToProps(reduxState) {
-  return { posts: reduxState.posts };
+  return { post: reduxState.post };
 }
 
 const mapDispatchToProps = {
-  addPost,
-  editPost
+  addPostToApi,
+  editPostInApi
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPostForm);

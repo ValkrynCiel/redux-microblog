@@ -19,6 +19,7 @@ class App extends Component {
           <Route exact path='/posts/:id'
                  render={(rtp) => <BlogPost
                  id={rtp.match.params.id}
+                 history={rtp.history}
           />}
           />
           <Redirect to='/' />

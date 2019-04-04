@@ -29,9 +29,20 @@ class Api {
         return res.data;
     }
 
+    static async addPost(post) {
+        const res = await axios.post(`${BASE_URL}`, post);
+        return res.data;
+    }
 
+    static async editPost(postId, post) {
+        const res = await axios.put(`${BASE_URL}/${postId}`, post);
+        return res.data;
+    }
 
-
+    static async deletePost(postId) {
+        const res = await axios.delete(`${BASE_URL}/${postId}`);
+        return res.data;
+    }
 
 }
 

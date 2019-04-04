@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import BlogPostForm from './BlogPostForm';
 import CommentArea from './CommentArea';
 import { connect } from 'react-redux';
-import { deletePost, getPostDetailFromApi } from './actions';
+import { deletePostFromApi, getPostDetailFromApi } from './actions';
 // import './BlogCard.css';
 
 class BlogPost extends Component {
@@ -27,13 +27,14 @@ class BlogPost extends Component {
     this.setState( st => ({ showEditForm: !st.showEditForm }))
   }
 
-  handleDelete() {
-    this.props.deletePost(this.props.id);
+  async handleDelete() {
+    await this.props.deletePostFromApi(this.props.post.id);
+    this.props.history.push('/');
   }
 
   render() {
     const post = this.props.post;
-    if (!post) return <Redirect to='/' />
+    if (!post.id) return <Redirect to='/' />
     return (
       <div className="BlogPost col-8">
         { this.state.isLoading
@@ -58,9 +59,9 @@ class BlogPost extends Component {
           <div className='d-flex flex-column align-items-center'>
             {this.state.showEditForm && <BlogPostForm title={ post.title }
                                               description={ post.description }
-                                              body={post.body}
-                                              id={this.props.id}
-                                              handleResetView={this.toggleEditView}/>}
+                                              body={ post.body }
+                                              id={ post.id }
+                                              handleResetView={ this.toggleEditView }/>}
           </div>
           </>
         }
@@ -74,7 +75,7 @@ function mapStateToProps(reduxState) {
 }
 
 const mapDispatchToProps = {
-  deletePost,
+  deletePostFromApi,
   getPostDetailFromApi,
 }
 
