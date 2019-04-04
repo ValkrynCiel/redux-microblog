@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import BlogPostForm from './BlogPostForm';
 import CommentArea from './CommentArea';
+import { connect } from 'react-redux';
+import { deletePost, addComment, deleteComment } from './actions';
 // import './BlogCard.css';
 
 class BlogPost extends Component {
@@ -20,28 +22,29 @@ class BlogPost extends Component {
   }
 
   handleDelete() {
-    this.props.triggerDelete(this.props.id);
+    // this.props.triggerDelete(this.props.id);
+    this.props.deletePost(this.props.id);
   }
 
   render() {
-    if (!this.props.post) return <Redirect to='/' />
+    const post = this.props.posts[this.props.id];
+    if (!post) return <Redirect to='/' />
     return (
       <div className="BlogPost col-8">
-          <h1>{ this.props.post.title }</h1>
-          <p><i>{ this.props.post.description }</i></p>
-          <p>{ this.props.post.body }</p>
+          <h1>{ post.title }</h1>
+          <p><i>{ post.description }</i></p>
+          <p>{ post.body }</p>
           <button className="btn btn-primary m-1" onClick={ this.toggleEditView }> <i className="fas fa-edit"></i> </button>
           <button className="btn btn-danger m-1" onClick={ this.handleDelete }> <i className="fas fa-trash-alt"></i> </button>
           <CommentArea postId ={this.props.id}
-                       comments={this.props.post.comments}
-                       triggerAddComment={this.props.triggerAddComment}
+                       comments={post.comments}
+                       triggerAddComment={this.props.addComment}
                        triggerDeleteComment={
-                         this.props.triggerDeleteComment}/>
+                         this.props.deleteComment}/>
           <div className='d-flex flex-column align-items-center'>
-            {this.state.showEditForm && <BlogPostForm title={ this.props.post.title }
-                                              description={ this.props.post.description }
-                                              body={this.props.post.body}
-                                              triggerEdit={this.props.triggerEdit}
+            {this.state.showEditForm && <BlogPostForm title={ post.title }
+                                              description={ post.description }
+                                              body={post.body}
                                               id={this.props.id}
                                               handleResetView={this.toggleEditView}/>}
           </div>
@@ -50,4 +53,14 @@ class BlogPost extends Component {
   }
 }
 
-export default BlogPost;
+function mapStateToProps(reduxState) {
+  return { posts: reduxState.posts };
+}
+
+const mapDispatchToProps = {
+  deletePost,
+  addComment,
+  deleteComment,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);

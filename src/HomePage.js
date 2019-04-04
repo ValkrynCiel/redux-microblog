@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BlogCard from './BlogCard';
+import { connect } from 'react-redux';
 // import './HomePage.css';
 
 class HomePage extends Component {
@@ -24,4 +25,8 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+function mapStateToProps(reduxState) {
+  return { posts: reduxState.posts };
+}
+
+export default connect(mapStateToProps)(HomePage);

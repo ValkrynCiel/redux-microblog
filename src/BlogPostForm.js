@@ -31,7 +31,6 @@ class BlogPostForm extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    // FIXME remember to make triggerAdd a boolean!!!
     if(this.props.triggerAdd){
       // this.props.triggerAdd(this.state);
       const post = {...this.state, comments:[]};

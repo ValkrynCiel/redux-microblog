@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuid from 'uuid/v4';
 // import './CommentArea.css';
 
 class CommentArea extends Component {
@@ -19,11 +20,13 @@ class CommentArea extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.triggerAddComment(this.props.postId, this.state.text);
- 
+    const id = uuid();
+    const comment = {id, text: this.state.text};
+    this.props.triggerAddComment(this.props.postId, comment);
+
     this.setState({text:''});
   }
-  
+
 
   renderComments() {
     return this.props.comments.map(comment =>
