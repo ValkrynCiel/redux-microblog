@@ -12,36 +12,52 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     switch (action.type) {
 
-        case ADD_COMMENT:{
+        case ADD_COMMENT: {
+            const { postId, comment } = action.payload;
+            const post = state.posts[postId];
 
-            return
+            const newComments = [ ...post.comments, comment ];
+        
+            const newPost = { ...post, comments: newComments };
+        
+            return { ...state, posts: { ...state.posts, [postId]: newPost } };
         }
 
         case DELETE_COMMENT: {
-            return
+            const { postId, commentId } = action.payload;
+            const post = state.posts[postId];
+
+            const newComments = post.comments.filter(c => c.id !== commentId);
+            const newPost = { ...post, comments: newComments };
+          
+            return {...state, posts: { ...state.posts, [postId]: newPost } };
+
         }
 
         case ADD_POST: {
             const { postId, post } = action.payload;
             const newPost = { ...post, comments: [] };
 
-            return { ...state, posts: { ...this.state.posts, [postId]: newPost } }
+            return { ...state, posts: { ...state.posts, [postId]: newPost } }
         }
 
         case DELETE_POST: {
-            return
+            const { postId } = action.payload;
+            const { [postId]:removed, ...newPostState } = state.posts
+
+            return { ...state, posts: newPostState }
         }
 
         case EDIT_POST:{
-            const { postId, }
-            const comments = state.posts[action.postId].comments;
-            const newPost = { ...postObj, comments };
+            const { postId, post } = action.payload;
+            const comments = state.posts[postId].comments;
+            const newPost = { ...post, comments };
     
-        this.setState({
-          posts: { ...this.state.posts, [id]: newPost },
-        });
+            return { ...state, posts: { ...state.posts, [postId]: newPost } }
     }
 
         default:{}
     }
 }
+
+export default rootReducer;

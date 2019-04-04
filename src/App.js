@@ -39,34 +39,34 @@ class App extends Component {
   }
 
   deletePost(postId) {
-    const newPostState = { ...this.state.posts }
-    delete newPostState[postId];
+    // const newPostState = { ...this.state.posts }
+    // delete newPostState[postId];
 
-    this.setState({
-      posts: newPostState
-    })
+    // this.setState({
+    //   posts: newPostState
+    // })
   }
 
   addComment(postId, comment) {
-    const post = this.state.posts[postId];
+    // const post = this.state.posts[postId];
 
-    const newComments = [...post.comments,
-    {
-      text: comment,
-      id: uuid()
-    }];
+    // const newComments = [...post.comments,
+    // {
+    //   text: comment,
+      id: uuid() //////////////UUID IN COMPONENET!LJAERPOOIJ
+    // }];
 
-    const newPost = { ...post, comments: newComments };
+    // const newPost = { ...post, comments: newComments };
 
-    this.setState({ posts: { ...this.state.posts, [postId]: newPost } });
+    // this.setState({ posts: { ...this.state.posts, [postId]: newPost } });
   }
 
   deleteComment(postId, commentId) {
-    const post = this.state.posts[postId];
-    const newComments = post.comments.filter(c => c.id !== commentId);
-    const newPost = { ...post, comments: newComments };
+    // const post = this.state.posts[postId];
+    // const newComments = post.comments.filter(c => c.id !== commentId);
+    // const newPost = { ...post, comments: newComments };
   
-    this.setState({ posts: { ...this.state.posts, [postId]: newPost } });
+    // this.setState({ posts: { ...this.state.posts, [postId]: newPost } });
   }
 
   render() {
