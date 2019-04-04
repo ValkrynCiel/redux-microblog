@@ -65,7 +65,7 @@ class App extends Component {
     // const post = this.state.posts[postId];
     // const newComments = post.comments.filter(c => c.id !== commentId);
     // const newPost = { ...post, comments: newComments };
-  
+
     // this.setState({ posts: { ...this.state.posts, [postId]: newPost } });
   }
 
@@ -74,7 +74,7 @@ class App extends Component {
       <div className="App d-flex flex-column align-items-center">
         <NavBar />
         <Switch>
-          <Route exact path='/new' render={(rtp) => <BlogPostForm triggerAdd={this.addPost} history={rtp.history} />} />
+          <Route exact path='/new' render={(rtp) => <BlogPostForm triggerAdd={true} history={rtp.history} />} />
           <Route exact path='/' render={() => <HomePage posts={this.state.posts} />} />
           <Route exact path='/posts/:id' render={(rtp) => <BlogPost
             post={this.state.posts[rtp.match.params.id]}

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import './BlogForm.css';
+import uuid from 'uuid/v4';
+import { connect } from 'react-redux';
+import { addPost, editPost } from './actions';
+// import './BlogPostForm.css';
 
-class BlogForm extends Component {
+class BlogPostForm extends Component {
   static defaultProps={
     title: '',
     description: '',
@@ -28,11 +31,18 @@ class BlogForm extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
+    // FIXME remember to make triggerAdd a boolean!!!
     if(this.props.triggerAdd){
-      this.props.triggerAdd(this.state);
+      // this.props.triggerAdd(this.state);
+      const post = {...this.state, comments:[]};
+      const id = uuid();
+      this.props.addPost(id, post);
       this.props.history.push('/');
     } else {
-      this.props.triggerEdit(this.props.id, this.state);
+      // this.props.triggerEdit(this.props.id, this.state);
+      const post = this.state;
+      const id = this.props.id;
+      this.props.editPost(id, post);
       this.props.handleResetView();
     }
   }
@@ -76,4 +86,13 @@ class BlogForm extends Component {
   }
 }
 
-export default BlogForm;
+function mapStateToProps(reduxState) {
+  return { posts: reduxState.posts };
+}
+
+const mapDispatchToProps = {
+  addPost,
+  editPost
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogPostForm);
