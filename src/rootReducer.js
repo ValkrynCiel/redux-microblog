@@ -4,7 +4,7 @@ import {
     ADD_POST,
     DELETE_POST,
     EDIT_POST
-} from "./actionTypes"
+} from "./actionTypes";
 
 const INITIAL_STATE = { posts: {} };
 
@@ -38,12 +38,12 @@ function rootReducer(state = INITIAL_STATE, action) {
             const { postId, post } = action.payload;
             const newPost = { ...post, comments: [] };
 
-            return { ...state, posts: { ...state.posts, [postId]: newPost } }
+            return { ...state, posts: { ...state.posts, [postId]: newPost } };
         }
 
         case DELETE_POST: {
             const { postId } = action.payload;
-            const { [postId]:removed, ...newPostState } = state.posts
+            const { [postId]:removedValue, ...newPostState } = state.posts
 
             return { ...state, posts: newPostState }
         }
@@ -53,10 +53,12 @@ function rootReducer(state = INITIAL_STATE, action) {
             const comments = state.posts[postId].comments;
             const newPost = { ...post, comments };
     
-            return { ...state, posts: { ...state.posts, [postId]: newPost } }
+            return { ...state, posts: { ...state.posts, [postId]: newPost } };
     }
 
-        default:{}
+        default: {
+            return { ...state };
+        }
     }
 }
 

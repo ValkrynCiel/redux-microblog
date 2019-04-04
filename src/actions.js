@@ -4,7 +4,7 @@ import {
     ADD_POST,
     DELETE_POST,
     EDIT_POST
-} from "./actionTypes"
+} from "./actionTypes";
 
 export function addComment(postId, comment) {
     return {
