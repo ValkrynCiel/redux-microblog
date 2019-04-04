@@ -31,8 +31,10 @@ class CommentArea extends Component {
   renderComments() {
     return this.props.comments.map(comment =>
     <div key={comment.id}>
-        {comment.text}
-        <button className="btn btn-danger m-1" onClick={ () => this.props.triggerDeleteComment(this.props.postId, comment.id) }> <i className="fas fa-trash-alt"></i> </button>
+        <p>{comment.text}
+        <span className="text-danger m-1" onClick={ () => this.props.triggerDeleteComment(this.props.postId, comment.id) }>
+        <i className="far fa-times-circle"></i></span>
+        </p>
       </div>
     );
   }
@@ -40,6 +42,7 @@ class CommentArea extends Component {
 
   render() {
     const comments = this.renderComments();
+    const unfinished = this.state.text.length === 0;
     return (
       <div>
         <div>
@@ -51,7 +54,7 @@ class CommentArea extends Component {
               <label htmlFor='text'>Comment:</label><br/>
               <input className="col-12" id='text' name='text' value={ this.state.text } onChange={ this.handleChange } />
             </div>
-            <button className='btn btn-primary'>Add Comment</button>
+            <button disabled={ unfinished } className='btn btn-primary'>Add Comment</button>
         </form>
       </div>
     );
