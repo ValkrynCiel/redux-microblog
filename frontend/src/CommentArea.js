@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import CommentForm from './CommentForm';
 import { connect } from 'react-redux';
-import { deleteCommentFromApi, addCommentToApi } from './actions'
+import { deleteCommentFromApi, addCommentToApi } from './actions';
+import Comment from './Comment';
 // import './CommentArea.css';
 
 class CommentArea extends Component {
@@ -24,14 +25,12 @@ class CommentArea extends Component {
    */
 
   renderComments() {
-    return this.props.post.comments.map(comment =>
-    <div key={comment.id}>
-        <p>{comment.text}
-        <span className="text-danger m-1"
-              onClick={ this.deleteComment }>
-        <i className="far fa-times-circle"></i></span>
-        </p>
-      </div>
+    return this.props.post.comments.map(({ id, text }) =>
+      <Comment key={id}
+               id={id}
+               text={text}
+               triggerDeleteComment={this.deleteComment}
+               postId={this.props.post.id}/>
     );
   }
 
