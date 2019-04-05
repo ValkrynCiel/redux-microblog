@@ -13,19 +13,40 @@ class BlogPost extends Component {
     this.state = {
       showEditForm: false,
       isLoading: true,
+      wrongPage: false,
     }
     this.toggleEditView = this.toggleEditView.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
+  /**
+   * populate post in redux state with object received from api
+   */
+
   async componentDidMount () {
-    await this.props.getPostDetailFromApi(this.props.id);
-    this.setState({ isLoading: false });
+    try {
+      await this.props.getPostDetailFromApi(this.props.id);
+
+      // if post id doesnt exist => wrongPage = true
+      if(this.props.post === ''){
+        this.setState({ isLoading: false, wrongPage: true });
+      } else {
+        this.setState({ isLoading: false });
+      }
+    } catch(err) {
+      // if post id is not int => wrongPage = true
+      this.setState({ isLoading: false, wrongPage: true });
+    }
   }
 
   toggleEditView() {
     this.setState( st => ({ showEditForm: !st.showEditForm }))
   }
+
+  /**
+   * delete post from backend and redux state
+   * redirect to homepage
+   */
 
   async handleDelete() {
     await this.props.deletePostFromApi(this.props.post.id);
@@ -33,8 +54,8 @@ class BlogPost extends Component {
   }
 
   render() {
-    const post = this.props.post;
-    if (!post.id) return <Redirect to='/' />
+    const {title, description, body, id} = this.props.post;
+    if (this.state.wrongPage) return <Redirect to='/' />
     return (
       <div className="BlogPost col-8">
         { this.state.isLoading
@@ -42,9 +63,9 @@ class BlogPost extends Component {
           "Loading..."
         :
           <>
-          <h1>{ post.title }</h1>
-          <p><i>{ post.description }</i></p>
-          <p>{ post.body }</p>
+          <h1>{ title }</h1>
+          <p><i>{ description }</i></p>
+          <p>{ body }</p>
           <button className="btn btn-primary m-1"
                   onClick={ this.toggleEditView }>
             <i className="fas fa-edit"></i>
@@ -57,10 +78,10 @@ class BlogPost extends Component {
           <CommentArea />
 
           <div className='d-flex flex-column align-items-center'>
-            {this.state.showEditForm && <BlogPostForm title={ post.title }
-                                              description={ post.description }
-                                              body={ post.body }
-                                              id={ post.id }
+            {this.state.showEditForm && <BlogPostForm title={ title }
+                                              description={ description }
+                                              body={ body }
+                                              id={ id }
                                               handleResetView={ this.toggleEditView }/>}
           </div>
           </>

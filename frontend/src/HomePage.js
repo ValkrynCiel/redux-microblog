@@ -12,6 +12,10 @@ class HomePage extends Component {
     }
   }
 
+  /**
+   * populate redux state with posts array from api call
+   */
+
   async componentDidMount() {
     await this.props.getPostTitlesFromApi();
     this.setState({ isLoading: false });

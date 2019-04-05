@@ -5,14 +5,15 @@ import { Link } from 'react-router-dom';
 class BlogCard extends Component {
 
   render() {
+    const {id, title, description} = this.props
     return (
       <div className="BlogCard card col-12 m-1">
-        <Link to={`/posts/${this.props.id}`}>
+        <Link to={`/posts/${id}`}>
           <div className="card-header">
-            <h3>{this.props.title}</h3>
+            <h3>{title}</h3>
           </div>
           <div className="card-body">
-            <p>{this.props.description}</p>
+            <p>{description}</p>
           </div>
         </Link>
       </div>

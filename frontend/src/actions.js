@@ -5,12 +5,20 @@ import {
 } from "./actionTypes";
 import Api from './Api';
 
+/**
+ * making api call to get all post titles
+ */
+
 export function getPostTitlesFromApi(){
   return async function(dispatch) {
     const titles = await Api.getPostTitles();
     dispatch(gotPostTitles(titles));
   }
 }
+
+/**
+ * load titles to redux state
+ */
 
 function gotPostTitles(titles) {
   return {
@@ -19,12 +27,20 @@ function gotPostTitles(titles) {
   }
 }
 
+/**
+ * making api call to get post details
+ */
+
 export function getPostDetailFromApi(postId){
   return async function(dispatch) {
     const post = await Api.getPostDetail(postId);
     dispatch(gotPostDetail(post));
   }
 }
+
+/**
+ * load post to redux state
+ */
 
 function gotPostDetail(post) {
   return {
@@ -33,6 +49,10 @@ function gotPostDetail(post) {
   }
 }
 
+/**
+ * making api call to add new comments to backend
+ * get comments to load to redux state
+ */
 
 export function addCommentToApi(postId, text) {
   return async function(dispatch) {
@@ -42,6 +62,11 @@ export function addCommentToApi(postId, text) {
   }
 }
 
+/**
+ * making api call to delete comment from backend
+ * get comments to load to redux state
+ */
+
 export function deleteCommentFromApi(postId, commentId) {
   return async function(dispatch) {
     await Api.deleteComment(postId, commentId);
@@ -50,12 +75,21 @@ export function deleteCommentFromApi(postId, commentId) {
   }
 }
 
+/**
+ * load comments to redux state
+ */
+
 function updateComments(comments) {
   return {
     type: UPDATE_COMMENTS,
     payload: { comments }
   }
 }
+
+/**
+ * making api call to add new posts to backend
+ * get posts to load to redux state
+ */
 
 export function addPostToApi(post) {
   return async function(dispatch) {
@@ -65,6 +99,11 @@ export function addPostToApi(post) {
   };
 }
 
+/**
+ * making api call to delete post from backend
+ * get posts to load to redux state
+ */
+
 export function deletePostFromApi(postId) {
   return async function(dispatch) {
     await Api.deletePost(postId);
@@ -72,6 +111,11 @@ export function deletePostFromApi(postId) {
     dispatch(gotPostTitles(titles));
   };
 }
+
+/**
+ * making api call to edit post in backend
+ * get post to load to redux state
+ */
 
 export function editPostInApi(postId, newPost) {
   return async function(dispatch) {

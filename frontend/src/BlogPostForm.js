@@ -29,12 +29,14 @@ class BlogPostForm extends Component {
   }
 
   handleSubmit(evt) {
+    //if there a post is added, add post to backend and redux state, redirect to homepage
     evt.preventDefault();
     if(this.props.triggerAdd){
       const post = { ...this.state };
       this.props.addPostToApi(post);
       this.props.history.push('/');
     } else {
+    // if post is edited, update post in backend and redux state
       const post = this.state;
       const id = this.props.post.id;
       this.props.editPostInApi(id, post);

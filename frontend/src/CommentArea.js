@@ -6,12 +6,29 @@ import { deleteCommentFromApi, addCommentToApi } from './actions'
 
 class CommentArea extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+    this.deleteComment = this.deleteComment.bind(this);
+  }
+
+  async deleteComment(postId, commentId) {
+    await this.props.deleteCommentFromApi(postId, commentId);
+  }
+
+
+  /**
+   * create comments with buttons that will delete them from the API
+   */
+
   renderComments() {
     return this.props.post.comments.map(comment =>
     <div key={comment.id}>
         <p>{comment.text}
         <span className="text-danger m-1"
-              onClick={ async () => await this.props.deleteCommentFromApi(this.props.post.id, comment.id) }>
+              onClick={ this.deleteComment }>
         <i className="far fa-times-circle"></i></span>
         </p>
       </div>

@@ -25,7 +25,7 @@ router.get("/", async function (req, res, next) {
               p.title,
               p.description,
               p.votes
-      FROM posts p 
+      FROM posts p
       ORDER BY p.id
       `
     );
@@ -59,11 +59,11 @@ router.get("/:id", async function (req, res, next) {
               CASE WHEN COUNT(c.id) = 0 THEN JSON '[]' ELSE JSON_AGG(
                     JSON_BUILD_OBJECT('id', c.id, 'text', c.text)
                 ) END AS comments
-      FROM posts p 
+      FROM posts p
         LEFT JOIN comments c ON c.post_id = p.id
       WHERE p.id = $1
-      
-      GROUP BY p.id    
+
+      GROUP BY p.id
       ORDER BY p.id
       `, [req.params.id]
     );
@@ -103,8 +103,8 @@ router.post("/", async function (req, res, next) {
   try {
     const {title, body, description} = req.body;
     const result = await db.query(
-      `INSERT INTO posts (title, description, body) 
-        VALUES ($1, $2, $3) 
+      `INSERT INTO posts (title, description, body)
+        VALUES ($1, $2, $3)
         RETURNING id, title, description, body, votes`,
       [title, description, body]);
     return res.status(201).json(result.rows[0]);
@@ -125,7 +125,7 @@ router.put("/:id", async function (req, res, next) {
     const {title, body, description} = req.body;
     const result = await db.query(
       `UPDATE posts SET title=$1, description=$2, body=$3
-        WHERE id = $4 
+        WHERE id = $4
         RETURNING id, title, description, body, votes`,
       [title, description, body, req.params.id]);
     return res.json(result.rows[0]);

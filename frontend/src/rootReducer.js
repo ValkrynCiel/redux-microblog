@@ -5,7 +5,6 @@ import {
 } from "./actionTypes";
 
 const INITIAL_STATE = { post: {},
-                        seenPosts: {},
                         titles:[] };
 
 function rootReducer(state = INITIAL_STATE, action) {
@@ -24,7 +23,7 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     case UPDATE_COMMENTS: {
       const { comments } = action.payload;
-      
+
       return { ...state, post: {...state.post, comments} }
     }
 
