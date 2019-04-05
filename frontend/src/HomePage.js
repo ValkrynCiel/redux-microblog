@@ -22,8 +22,7 @@ class HomePage extends Component {
   }
 
   renderPosts() {
-    const titles = [...this.props.titles];
-    titles.sort((a, b) => b.votes - a.votes);
+    const {titles} = this.props;
     return titles.map( ({ id, title, description, votes }) =>
       <BlogCard key={ id }
                 id={ id }

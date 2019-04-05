@@ -21,7 +21,7 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     case LOAD_POST_TITLES: {
       const { titles } = action.payload;
-      return { ...state, titles };
+      return { ...state, titles: titles.sort((a,b) => b.votes - a.votes) };
     }
 
     case LOAD_POST_DETAIL: {
@@ -51,7 +51,8 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     case ADD_TITLE: {
       const { title } = action.payload;
-      return {...state, titles: [...state.titles, title]};
+      const newTitles = [...state.titles, title].sort( (a,b ) => b.votes - a.votes);
+      return {...state, titles: newTitles};
     }
 
     case DELETE_COMMENT: {
@@ -66,18 +67,18 @@ function rootReducer(state = INITIAL_STATE, action) {
     }
     //FIXME: need to work on this
     case UPDATE_VOTES: {
-      const { postId, delta } = action.payload;
+      const { postId, votes } = action.payload;
 
       const newTitles = state.titles
         .map(t => {
-          return t.id === postId ? { ...t, votes: t.votes + delta } : t;
+          return t.id === postId ? { ...t, votes } : t;
         })
         .sort( (a,b) => b.votes - a.votes);
 
-      if (state.post.votes) {
+      if (state.post.votes !== undefined) {
         return {
           ...state,
-          post: { ...state.post, votes: state.post.votes + delta },
+          post: { ...state.post, votes },
           titles: newTitles
         }
       }

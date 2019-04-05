@@ -81,8 +81,14 @@ function addComment(comment){
 export function deleteCommentFromApi(postId, commentId) {
   return async function(dispatch) {
     await Api.deleteComment(postId, commentId);
-    const newComments = await Api.getComments(postId);
-    dispatch(updateComments(newComments));
+    dispatch(deleteComment(commentId));
+  }
+}
+
+function deleteComment(commentId) {
+  return {
+    type: DELETE_COMMENT,
+    payload: { commentId }
   }
 }
 
@@ -90,12 +96,7 @@ export function deleteCommentFromApi(postId, commentId) {
  * load comments to redux state
  */
 
-function updateComments(comments) {
-  return {
-    type: UPDATE_COMMENTS,
-    payload: { comments }
-  }
-}
+
 
 /**
  * making api call to add new posts to backend
@@ -104,10 +105,16 @@ function updateComments(comments) {
 
 export function addPostToApi(post) {
   return async function(dispatch) {
-    await Api.addPost(post);
-    const titles = await Api.getPostTitles();
-    dispatch(gotPostTitles(titles));
+    const { id, title, description, votes } = await Api.addPost(post);
+    dispatch(addPostToTitles({ id, title, description, votes }));
   };
+}
+
+function addPostToTitles(title) {
+  return {
+    type: ADD_TITLE,
+    payload: { title }
+  }
 }
 
 /**
@@ -118,9 +125,15 @@ export function addPostToApi(post) {
 export function deletePostFromApi(postId) {
   return async function(dispatch) {
     await Api.deletePost(postId);
-    const titles = await Api.getPostTitles();
-    dispatch(gotPostTitles(titles));
+    dispatch(deletePostFromTitles(postId));
   };
+}
+
+function deletePostFromTitles (titleId) {
+  return {
+    type: DELETE_TITLE,
+    payload: { titleId }
+  }
 }
 
 /**
@@ -130,20 +143,34 @@ export function deletePostFromApi(postId) {
 
 export function editPostInApi(postId, newPost) {
   return async function(dispatch) {
-    await Api.editPost(postId, newPost);
-    const post = await Api.getPostDetail(postId);
-    const titles = await Api.getPostTitles();
-    dispatch(gotPostDetail(post));
-    dispatch(gotPostTitles(titles));
+    const updatedPost = await Api.editPost(postId, newPost);
+    dispatch(updatePost(updatedPost));
   };
+}
+
+function updatePost(post) {
+  return {
+    type: UPDATE_POST,
+    payload: { post }
+  }
 }
 
 export function updateVoteToApi(postId, delta) {
   return async function(dispatch) {
-    await Api.updateVote(postId, delta);
-    const post = await Api.getPostDetail(postId);
-    const titles = await Api.getPostTitles();
-    dispatch(gotPostDetail(post));
-    dispatch(gotPostTitles(titles));
+    const { votes } = await Api.updateVote(postId, delta);
+    dispatch(updateVote(postId, votes));
+  }
+}
+
+function updateVote(postId, votes){
+  return {
+    type: UPDATE_VOTES,
+    payload: { postId, votes }
+  }
+}
+
+export function clearPostFromState() {
+  return {
+    type: CLEAR_POST
   }
 }

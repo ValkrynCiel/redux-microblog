@@ -4,7 +4,7 @@ import BlogPostForm from './BlogPostForm';
 import CommentArea from './CommentArea';
 import VoteCounter from './VoteCounter';
 import { connect } from 'react-redux';
-import { deletePostFromApi, getPostDetailFromApi, updateVoteToApi } from './actions';
+import { deletePostFromApi, getPostDetailFromApi, updateVoteToApi, clearPostFromState } from './actions';
 // import './BlogCard.css';
 
 class BlogPost extends Component {
@@ -38,6 +38,10 @@ class BlogPost extends Component {
       // if post id is not int => wrongPage = true
       this.setState({ isLoading: false, wrongPage: true });
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearPostFromState();
   }
 
   toggleEditView() {
@@ -113,6 +117,7 @@ const mapDispatchToProps = {
   deletePostFromApi,
   getPostDetailFromApi,
   updateVoteToApi,
+  clearPostFromState
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);
