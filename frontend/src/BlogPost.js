@@ -39,6 +39,7 @@ class BlogPost extends Component {
       this.setState({ isLoading: false, wrongPage: true });
     }
   }
+  
 
   componentWillUnmount() {
     this.props.clearPostFromState();

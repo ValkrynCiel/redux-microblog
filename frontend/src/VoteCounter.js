@@ -9,6 +9,7 @@ class VoteCounter extends Component {
     this.voteDown = this.voteDown.bind(this);
   }
 
+
   voteUp() {
     this._handleVote('up');
   }

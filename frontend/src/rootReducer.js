@@ -38,7 +38,7 @@ function rootReducer(state = INITIAL_STATE, action) {
 
       return {
         ...state,
-        post,
+        post: {...state.post, ...post},
         titles: newTitles
       }
     }
@@ -63,7 +63,7 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     case ADD_COMMENT: {
       const { comment } = action.payload;
-      return { ...state, post: { ...state.post, comments: [...state.comments, comment] }};
+      return { ...state, post: { ...state.post, comments: [...state.post.comments, comment] }};
     }
     //FIXME: need to work on this
     case UPDATE_VOTES: {

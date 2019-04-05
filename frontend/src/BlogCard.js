@@ -4,6 +4,11 @@ import VoteCounter from './VoteCounter';
 // import './BlogCard.css';
 
 class BlogCard extends Component {
+
+  shouldComponentUpdate(nextProps) {
+    return nextProps.votes !== this.props.votes;
+  }
+  
   render() {
     const {id, title, description, votes, updateVote } = this.props;
     return (

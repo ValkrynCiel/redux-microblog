@@ -12,6 +12,10 @@ class Comment extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state.showDeleteButton !== nextState.showDeleteButton;
+  }
+
   showDelete() {
     this.setState({
       showDeleteButton: true
