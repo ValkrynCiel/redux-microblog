@@ -122,7 +122,17 @@ export function editPostInApi(postId, newPost) {
     await Api.editPost(postId, newPost);
     const post = await Api.getPostDetail(postId);
     const titles = await Api.getPostTitles();
-    dispatch(gotPostDetail(post))
+    dispatch(gotPostDetail(post));
     dispatch(gotPostTitles(titles));
   };
+}
+
+export function updateVoteToApi(postId, delta) {
+  return async function(dispatch) {
+    await Api.updateVote(postId, delta);
+    const post = await Api.getPostDetail(postId);
+    const titles = await Api.getPostTitles();
+    dispatch(gotPostDetail(post));
+    dispatch(gotPostTitles(titles));
+  }
 }

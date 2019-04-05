@@ -44,6 +44,10 @@ class Api {
         return res.data;
     }
 
+    static async updateVote(postId, delta) {
+        const res = await axios.post(`${BASE_URL}/${postId}/vote/${delta}`);
+        return res.data;
+    }
 }
 
 export default Api;

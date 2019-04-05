@@ -57,10 +57,10 @@ class BlogPostForm extends Component {
     const unfinished = this.state.title.length === 0;
     return (
       <div className="d-flex align-items-center flex-column col-10">
-        <div className="col-4">
+        <>
           {this.props.triggerAdd ? <h1>Add New Post</h1> : <h1>Edit Post</h1>}
-        </div>
-        <form className="BlogForm col-4">
+        </>
+        <form className="BlogForm col-12">
 
           <div className="form-group">
             <label htmlFor='title'>Title:</label><br/>

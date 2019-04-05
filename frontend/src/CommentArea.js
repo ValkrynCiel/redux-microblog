@@ -38,6 +38,7 @@ class CommentArea extends Component {
     const comments = this.renderComments();
     return (
       <div className='CommentArea'>
+        <h3>Comments: </h3>
         {comments}
         <CommentForm postId={ this.props.post.id }
                      triggerAddComment={this.props.addCommentToApi}/>

@@ -27,10 +27,10 @@ class CommentForm extends Component {
   render() {
     const unfinished = this.state.text.length === 0;
     return (
-      <form className="CommentForm d-flex align-items-center flex-column col-10" onSubmit={this.handleSubmit} >
+      <form className="CommentForm d-flex align-items-start flex-column col-6 p-0" onSubmit={this.handleSubmit} >
 
-        <div className="form-group">
-          <label htmlFor='text'>Comment:</label><br />
+        <div className="form-group col-12 p-0">
+          <label htmlFor='text'>New Comment:</label><br />
           <input className="col-12"
             id='text'
             name='text'

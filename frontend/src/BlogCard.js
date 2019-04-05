@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import VoteCounter from './VoteCounter';
 // import './BlogCard.css';
 
 class BlogCard extends Component {
-
   render() {
-    const {id, title, description} = this.props
+    const {id, title, description, votes, updateVote } = this.props;
     return (
       <div className="BlogCard card col-12 m-1">
         <Link to={`/posts/${id}`}>
@@ -16,6 +16,11 @@ class BlogCard extends Component {
             <p>{description}</p>
           </div>
         </Link>
+        <div className="card-footer">
+          <VoteCounter postId={id}
+                       votes={votes}
+                       updateVote={updateVote}/>
+        </div>
       </div>
     );
   }

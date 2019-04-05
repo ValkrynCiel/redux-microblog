@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BlogCard from './BlogCard';
 import { connect } from 'react-redux';
-import { getPostTitlesFromApi } from './actions';
+import { getPostTitlesFromApi, updateVoteToApi } from './actions';
 // import './HomePage.css';
 
 class HomePage extends Component {
@@ -22,11 +22,15 @@ class HomePage extends Component {
   }
 
   renderPosts() {
-    return this.props.titles.map( t =>
-      <BlogCard key={t.id}
-                id={t.id}
-                title={t.title}
-                description={ t.description }/>
+    const titles = [...this.props.titles];
+    titles.sort((a, b) => b.votes - a.votes);
+    return titles.map( ({ id, title, description, votes }) =>
+      <BlogCard key={ id }
+                id={ id }
+                title={ title }
+                description={ description }
+                votes={ votes }
+                updateVote={ this.props.updateVoteToApi }/>
       )
   }
 
@@ -49,6 +53,7 @@ function mapStateToProps(reduxState) {
 
 const mapDispatchToProps = {
   getPostTitlesFromApi,
+  updateVoteToApi,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
