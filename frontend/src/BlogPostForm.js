@@ -56,7 +56,7 @@ class BlogPostForm extends Component {
   render() {
     const unfinished = this.state.title.length === 0;
     return (
-      <div className="d-flex align-items-center flex-column col-10">
+      <div className="d-flex align-items-center flex-column col-12">
         <>
           {this.props.triggerAdd ? <h1>Add New Post</h1> : <h1>Edit Post</h1>}
         </>

@@ -14,7 +14,7 @@ class App extends Component {
         <NavBar />
         <Switch>
           <Route exact path='/new'
-                 render={(rtp) => <BlogPostForm triggerAdd={true} history={rtp.history} />} />
+                 render={(rtp) => <div className="col-8"><BlogPostForm triggerAdd={true} history={rtp.history} /></div>} />
           <Route exact path='/' render={() => <HomePage />} />
           <Route exact path='/posts/:id'
                  render={(rtp) => <BlogPost

@@ -1,7 +1,13 @@
 import {
   LOAD_POST_TITLES,
   LOAD_POST_DETAIL,
-  UPDATE_COMMENTS,
+  UPDATE_POST,
+  ADD_TITLE,
+  DELETE_TITLE,
+  DELETE_COMMENT,
+  ADD_COMMENT,
+  UPDATE_VOTES,
+  CLEAR_POST
 } from "./actionTypes";
 import Api from './Api';
 
@@ -56,12 +62,17 @@ function gotPostDetail(post) {
 
 export function addCommentToApi(postId, text) {
   return async function(dispatch) {
-    await Api.addComment(postId, text);
-    const newComments = await Api.getComments(postId);
-    dispatch(updateComments(newComments));
+    const comment = await Api.addComment(postId, text);
+    dispatch(addComment(comment));
   }
 }
 
+function addComment(comment){
+  return {
+    type: ADD_COMMENT,
+    payload: { comment }
+  }
+}
 /**
  * making api call to delete comment from backend
  * get comments to load to redux state
