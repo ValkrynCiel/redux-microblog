@@ -48,8 +48,8 @@ class CommentArea extends Component {
 }
 
 
-function mapStateToProps(reduxState) {
-  return { post: reduxState.post };
+function mapStateToProps(reduxState, ownProps) {
+  return { post: reduxState.seen[ownProps.postId]};
 }
 
 const mapDispatchToProps = {

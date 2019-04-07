@@ -1,13 +1,13 @@
 import {
   LOAD_POST_TITLES,
-  LOAD_POST_DETAIL,
   UPDATE_POST,
   ADD_TITLE,
   DELETE_TITLE,
+  DELETE_POST,
   DELETE_COMMENT,
   ADD_COMMENT,
   UPDATE_VOTES,
-  CLEAR_POST
+  ADD_TO_SEEN,
 } from "./actionTypes";
 import Api from './Api';
 
@@ -40,18 +40,8 @@ function gotPostTitles(titles) {
 export function getPostDetailFromApi(postId){
   return async function(dispatch) {
     const post = await Api.getPostDetail(postId);
-    dispatch(gotPostDetail(post));
-  }
-}
-
-/**
- * load post to redux state
- */
-
-function gotPostDetail(post) {
-  return {
-    type: LOAD_POST_DETAIL,
-    payload: { post }
+    // dispatch(gotPostDetail(post));
+    dispatch(addPostToSeen(post));
   }
 }
 
@@ -63,16 +53,21 @@ function gotPostDetail(post) {
 export function addCommentToApi(postId, text) {
   return async function(dispatch) {
     const comment = await Api.addComment(postId, text);
-    dispatch(addComment(comment));
+    dispatch(addComment(comment, postId ));
   }
 }
 
-function addComment(comment){
+/**
+ * load comments to redux state
+ */
+
+function addComment(comment, postId ){
   return {
     type: ADD_COMMENT,
-    payload: { comment }
+    payload: { comment, postId }
   }
 }
+
 /**
  * making api call to delete comment from backend
  * get comments to load to redux state
@@ -81,22 +76,16 @@ function addComment(comment){
 export function deleteCommentFromApi(postId, commentId) {
   return async function(dispatch) {
     await Api.deleteComment(postId, commentId);
-    dispatch(deleteComment(commentId));
+    dispatch(deleteComment(postId, commentId));
   }
 }
 
-function deleteComment(commentId) {
+function deleteComment(postId, commentId) {
   return {
     type: DELETE_COMMENT,
-    payload: { commentId }
+    payload: { postId, commentId }
   }
 }
-
-/**
- * load comments to redux state
- */
-
-
 
 /**
  * making api call to add new posts to backend
@@ -136,6 +125,13 @@ function deletePostFromTitles (titleId) {
   }
 }
 
+export function deletePostFromSeen (postId) {
+  return {
+    type: DELETE_POST,
+    payload: { postId }
+  }
+}
+
 /**
  * making api call to edit post in backend
  * get post to load to redux state
@@ -169,8 +165,9 @@ function updateVote(postId, votes){
   }
 }
 
-export function clearPostFromState() {
+export function addPostToSeen(post) {
   return {
-    type: CLEAR_POST
+    type: ADD_TO_SEEN,
+    payload: { post },
   }
 }

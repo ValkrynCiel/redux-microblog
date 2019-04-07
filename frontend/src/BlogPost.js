@@ -4,7 +4,11 @@ import BlogPostForm from './BlogPostForm';
 import CommentArea from './CommentArea';
 import VoteCounter from './VoteCounter';
 import { connect } from 'react-redux';
-import { deletePostFromApi, getPostDetailFromApi, updateVoteToApi, clearPostFromState } from './actions';
+import { deletePostFromApi,
+         getPostDetailFromApi,
+         updateVoteToApi,
+         addPostToSeen,
+         deletePostFromSeen } from './actions';
 // import './BlogCard.css';
 
 class BlogPost extends Component {
@@ -26,7 +30,10 @@ class BlogPost extends Component {
 
   async componentDidMount() {
     try {
-      await this.props.getPostDetailFromApi(this.props.id);
+      const { post, id } = this.props;
+      if(!post){
+        await this.props.getPostDetailFromApi(id);
+      }
 
       // if post id doesnt exist => wrongPage = true
       if (this.props.post === '') {
@@ -38,11 +45,6 @@ class BlogPost extends Component {
       // if post id is not int => wrongPage = true
       this.setState({ isLoading: false, wrongPage: true });
     }
-  }
-  
-
-  componentWillUnmount() {
-    this.props.clearPostFromState();
   }
 
   toggleEditView() {
@@ -57,10 +59,11 @@ class BlogPost extends Component {
   async handleDelete() {
     await this.props.deletePostFromApi(this.props.post.id);
     this.props.history.push('/');
+    this.props.deletePostFromSeen(this.props.post.id);
   }
 
   render() {
-    const { title, description, body, id, votes } = this.props.post;
+    const { title, description, body, id, votes } = this.props.post? this.props.post : {};
     if (this.state.wrongPage) return <Redirect to='/' />
     return (
       <div className="BlogPost col-8">
@@ -68,57 +71,54 @@ class BlogPost extends Component {
           ?
           "Loading..."
           :
-          <>
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-6 p-0">
-                  <h1>{title}</h1>
-                  <p><i>{description}</i></p>
-                  <p>{body}</p>
-                  <button className="btn btn-primary m-1"
-                    onClick={this.toggleEditView}>
-                    <i className="fas fa-edit"></i>
-                  </button>
-                  <button className="btn btn-danger m-1"
-                    onClick={this.handleDelete}>
-                    <i className="fas fa-trash-alt"></i>
-                  </button>
+          this.state.showEditForm?
+            <BlogPostForm
+            id={id}
+            handleResetView={this.toggleEditView} />
+            :
+            <>
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-6 p-0">
+                    <button className="btn btn-primary m-1"
+                      onClick={this.toggleEditView}>
+                      <i className="fas fa-edit"></i>
+                    </button>
+                    <button className="btn btn-danger m-1"
+                      onClick={this.handleDelete}>
+                      <i className="fas fa-trash-alt"></i>
+                    </button>
+                    <h1>{title}</h1>
+                    <p><i>{description}</i></p>
+                    <p>{body}</p>
 
-
-                  <VoteCounter postId={id}
-                    votes={votes}
-                    updateVote={this.props.updateVoteToApi} />
-                </div>
-
-                <div className='col-6 d-flex flex-column align-items-center'>
-                  {this.state.showEditForm && <BlogPostForm title={title}
-                    description={description}
-                    body={body}
-                    id={id}
-                    handleResetView={this.toggleEditView} />}
+                    <VoteCounter postId={id}
+                      votes={votes}
+                      updateVote={this.props.updateVoteToApi} />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-4">
-              <CommentArea />
-            </div>
-          </>
+              <div className="mt-4">
+                <CommentArea postId={this.props.id}/>
+              </div>
+            </>
         }
       </div>
     );
   }
 }
 
-function mapStateToProps(reduxState) {
-  return { post: reduxState.post };
+function mapStateToProps(reduxState, ownProps) {
+  return { post: reduxState.seen[ownProps.id] };
 }
 
 const mapDispatchToProps = {
   deletePostFromApi,
   getPostDetailFromApi,
   updateVoteToApi,
-  clearPostFromState
+  addPostToSeen,
+  deletePostFromSeen,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);

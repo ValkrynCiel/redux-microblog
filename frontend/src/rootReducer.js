@@ -1,18 +1,18 @@
 import {
   LOAD_POST_TITLES,
-  LOAD_POST_DETAIL,
   UPDATE_POST,
   ADD_TITLE,
   DELETE_TITLE,
+  DELETE_POST,
   DELETE_COMMENT,
   ADD_COMMENT,
   UPDATE_VOTES,
-  CLEAR_POST
+  ADD_TO_SEEN,
 } from "./actionTypes";
 
 const INITIAL_STATE = {
-  post: {},
-  titles: []
+  seen: {},
+  titles: [],
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
@@ -24,21 +24,19 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, titles: titles.sort((a,b) => b.votes - a.votes) };
     }
 
-    case LOAD_POST_DETAIL: {
-      const { post } = action.payload;
-      return { ...state, post };
-    }
-
     case UPDATE_POST: {
       const { post } = action.payload;
-      const { id, title, description } = post;
+      const { id, title, description, body } = post;
       const newTitles = state.titles.map( t => {
         return t.id === id ? { id, title, description } : t
       });
 
+      const { [id]: oldPost } = state.seen;
+      const updatedPost = {...oldPost, title, description, body};
+
       return {
         ...state,
-        post: {...state.post, ...post},
+        seen:{...state.seen, [id]: updatedPost},
         titles: newTitles
       }
     }
@@ -49,25 +47,42 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, titles: newTitles };
     }
 
+    case DELETE_POST: {
+      const { postId } = action.payload;
+      const {[postId]: deleted, ...newSeen} = state.seen;
+
+      return {...state, seen: newSeen };
+    }
+
     case ADD_TITLE: {
       const { title } = action.payload;
+
       const newTitles = [...state.titles, title].sort( (a,b ) => b.votes - a.votes);
+
       return {...state, titles: newTitles};
     }
 
-    case DELETE_COMMENT: {
-      const { commentId } = action.payload;
-      const newComments = state.post.comments.filter(({ id }) => id !== commentId);
-      return { ...state, post: { ...state.post, comments: newComments } };
+    case ADD_COMMENT: {
+      const { comment, postId } = action.payload;
+      const { [postId]: currPost }= state.seen;
+      const { comments: currComments }= currPost;
+
+      return { ...state, seen: { ...state.seen, [postId]:{...currPost, comments:[...currComments, comment]} }};
     }
 
-    case ADD_COMMENT: {
-      const { comment } = action.payload;
-      return { ...state, post: { ...state.post, comments: [...state.post.comments, comment] }};
+    case DELETE_COMMENT: {
+      const { postId, commentId } = action.payload;
+      const { [postId]: currPost }= state.seen;
+      const { comments: currComments }= currPost;
+
+      const newComments = currComments.filter(({ id }) => id !== commentId);
+
+      return { ...state, seen: { ...state.seen, [postId]:{...currPost, comments: newComments }} };
     }
-    //FIXME: need to work on this
+
     case UPDATE_VOTES: {
       const { postId, votes } = action.payload;
+      const { [postId]: currPost }= state.seen;
 
       const newTitles = state.titles
         .map(t => {
@@ -75,10 +90,10 @@ function rootReducer(state = INITIAL_STATE, action) {
         })
         .sort( (a,b) => b.votes - a.votes);
 
-      if (state.post.votes !== undefined) {
+      if (currPost !== undefined) {
         return {
           ...state,
-          post: { ...state.post, votes },
+          seen: { ...state.seen, [postId]:{ ...currPost, votes }},
           titles: newTitles
         }
       }
@@ -86,10 +101,13 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, titles: newTitles };
 
     }
-    //FIXME: need to work
-    case CLEAR_POST: {
-      return { ...state, post: {} };
+
+    case ADD_TO_SEEN: {
+      const { post } = action.payload;
+
+      return { ...state, seen: {...state.seen, [post.id]: post} };
     }
+
 
     default: {
       return state;

@@ -6,17 +6,19 @@ import { addPostToApi, editPostInApi } from './actions';
 
 class BlogPostForm extends Component {
   static defaultProps={
-    title: '',
-    description: '',
-    body: '',
+    post:{
+      title: '',
+      description: '',
+      body: '',
+    },
   }
 
   constructor(props){
     super(props);
     this.state = {
-      title: this.props.title,
-      description: this.props.description,
-      body: this.props.body,
+      title: this.props.post.title,
+      description: this.props.post.description,
+      body: this.props.post.body,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -101,8 +103,8 @@ class BlogPostForm extends Component {
   }
 }
 
-function mapStateToProps(reduxState) {
-  return { post: reduxState.post };
+function mapStateToProps(reduxState, ownProps) {
+  return { post: reduxState.seen[ownProps.id] };
 }
 
 const mapDispatchToProps = {
