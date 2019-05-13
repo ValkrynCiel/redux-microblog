@@ -1,5 +1,5 @@
 # Microblog
-Microblog is an app that allows user to post articles and rate articles.
+Microblog is an app that allows user to post articles and rate articles.</ br>
 See it: https://microblog-less.herokuapp.com/
 
 ## Technologies
