@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `${process.env.REACT_APP_BASE_URL}api/posts` || 'http://localhost:5000/api/posts';
+const BASE_URL = process.env.REACT_APP_BASE_URL ? `${process.env.REACT_APP_BASE_URL}api/posts` : 'http://localhost:5000/api/posts';
 class Api {
 
     static async getPostTitles() {

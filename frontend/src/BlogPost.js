@@ -76,10 +76,10 @@ class BlogPost extends Component {
             id={id}
             handleResetView={this.toggleEditView} />
             :
-            <>
-              <div className="container-fluid">
+            <div className="card p-2">
+              <div className="container-fluid card-doby">
                 <div className="row">
-                  <div className="col-6 p-0">
+                  <div className="col-11 p-0">
                     <button className="btn btn-primary m-1"
                       onClick={this.toggleEditView}>
                       <i className="fas fa-edit"></i>
@@ -91,18 +91,21 @@ class BlogPost extends Component {
                     <h1>{title}</h1>
                     <p><i>{description}</i></p>
                     <p>{body}</p>
+                  </div>
 
+                  <div className="col-1 mt-5">
                     <VoteCounter postId={id}
                       votes={votes}
-                      updateVote={this.props.updateVoteToApi} />
+                      updateVote={this.props.updateVoteToApi}
+                    />
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-4 card-footer">
                 <CommentArea postId={this.props.id}/>
               </div>
-            </>
+            </div>
         }
       </div>
     );
