@@ -79,7 +79,7 @@ class BlogPost extends Component {
             <div className="card p-2">
               <div className="container-fluid card-doby">
                 <div className="row">
-                  <div className="col-11 p-0">
+                  <div className="p-0">
                     <button className="btn btn-primary m-1"
                       onClick={this.toggleEditView}>
                       <i className="fas fa-edit"></i>
@@ -93,10 +93,11 @@ class BlogPost extends Component {
                     <p>{body}</p>
                   </div>
 
-                  <div className="col-1 mt-5">
+                  <div className="position-absolute" style={{right: '.5rem'}}>
                     <VoteCounter postId={id}
                       votes={votes}
                       updateVote={this.props.updateVoteToApi}
+                      className="position-absolute"
                     />
                   </div>
                 </div>
