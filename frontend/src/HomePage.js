@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import BlogCard from './BlogCard';
 import { connect } from 'react-redux';
 import { getPostTitlesFromApi, updateVoteToApi } from './actions';
-// import './HomePage.css';
 
+/** component that displays BlogCards sorted by votes, posts can also be voted up or down from here */
 class HomePage extends Component {
   constructor(props) {
     super(props);

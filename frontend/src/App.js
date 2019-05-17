@@ -4,8 +4,8 @@ import NavBar from './NavBar';
 import BlogPostForm from './BlogPostForm';
 import HomePage from './HomePage';
 import BlogPost from './BlogPost';
-// import './App.css';
 
+/** set up for React Router */
 class App extends Component {
 
   render() {

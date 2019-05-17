@@ -3,8 +3,8 @@ import CommentForm from './CommentForm';
 import { connect } from 'react-redux';
 import { deleteCommentFromApi, addCommentToApi } from './actions';
 import Comment from './Comment';
-// import './CommentArea.css';
 
+/** component that renders all comments on a post and updates redux store when a comment is deleted */
 class CommentArea extends Component {
 
   constructor(props) {

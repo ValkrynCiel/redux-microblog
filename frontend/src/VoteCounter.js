@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import './VoteCounter.css';
 
+/** component that displays and handles up and downvotes for blog posts */
 class VoteCounter extends Component {
   constructor(props) {
     super(props);

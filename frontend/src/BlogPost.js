@@ -9,8 +9,8 @@ import { deletePostFromApi,
          updateVoteToApi,
          addPostToSeen,
          deletePostFromSeen } from './actions';
-// import './BlogCard.css';
 
+/** component that displays a blog post's details, comments, and an edit form */
 class BlogPost extends Component {
 
   constructor(props) {
@@ -25,7 +25,7 @@ class BlogPost extends Component {
   }
 
   /**
-   * populate post in redux state with object received from api
+   * populate post in redux store with object received from api
    */
 
   async componentDidMount() {
@@ -52,7 +52,7 @@ class BlogPost extends Component {
   }
 
   /**
-   * delete post from backend and redux state
+   * delete post from backend and redux store
    * redirect to homepage
    */
 
@@ -71,15 +71,15 @@ class BlogPost extends Component {
           ?
           "Loading..."
           :
-          this.state.showEditForm?
+          this.state.showEditForm ?
             <BlogPostForm
             id={id}
             handleResetView={this.toggleEditView} />
             :
-            <>
-              <div className="container-fluid">
+            <div className="card p-2">
+              <div className="container-fluid card-doby">
                 <div className="row">
-                  <div className="col-6 p-0">
+                  <div className="p-0">
                     <button className="btn btn-primary m-1"
                       onClick={this.toggleEditView}>
                       <i className="fas fa-edit"></i>
@@ -91,18 +91,22 @@ class BlogPost extends Component {
                     <h1>{title}</h1>
                     <p><i>{description}</i></p>
                     <p>{body}</p>
+                  </div>
 
+                  <div className="position-absolute" style={{right: '.5rem'}}>
                     <VoteCounter postId={id}
                       votes={votes}
-                      updateVote={this.props.updateVoteToApi} />
+                      updateVote={this.props.updateVoteToApi}
+                      className="position-absolute"
+                    />
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-4 card-footer">
                 <CommentArea postId={this.props.id}/>
               </div>
-            </>
+            </div>
         }
       </div>
     );
