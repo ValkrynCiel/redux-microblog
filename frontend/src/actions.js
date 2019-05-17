@@ -12,7 +12,7 @@ import {
 import Api from './Api';
 
 /**
- * making api call to get all post titles
+ * api call to get all post titles
  */
 
 export function getPostTitlesFromApi(){
@@ -23,7 +23,7 @@ export function getPostTitlesFromApi(){
 }
 
 /**
- * load titles to redux state
+ * load titles to redux store
  */
 
 function gotPostTitles(titles) {
@@ -47,7 +47,7 @@ export function getPostDetailFromApi(postId){
 
 /**
  * making api call to add new comments to backend
- * get comments to load to redux state
+ * get comments to load to redux store
  */
 
 export function addCommentToApi(postId, text) {
@@ -58,7 +58,7 @@ export function addCommentToApi(postId, text) {
 }
 
 /**
- * load comments to redux state
+ * load comments to redux store
  */
 
 function addComment(comment, postId ){
@@ -70,7 +70,7 @@ function addComment(comment, postId ){
 
 /**
  * making api call to delete comment from backend
- * get comments to load to redux state
+ * get comments to load to redux store
  */
 
 export function deleteCommentFromApi(postId, commentId) {
@@ -89,7 +89,7 @@ function deleteComment(postId, commentId) {
 
 /**
  * making api call to add new posts to backend
- * get posts to load to redux state
+ * get posts to load to redux store
  */
 
 export function addPostToApi(post) {
@@ -108,7 +108,7 @@ function addPostToTitles(title) {
 
 /**
  * making api call to delete post from backend
- * get posts to load to redux state
+ * get posts to load to redux store
  */
 
 export function deletePostFromApi(postId) {
@@ -134,7 +134,7 @@ export function deletePostFromSeen (postId) {
 
 /**
  * making api call to edit post in backend
- * get post to load to redux state
+ * get post to load to redux store
  */
 
 export function editPostInApi(postId, newPost) {

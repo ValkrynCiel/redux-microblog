@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import VoteCounter from './VoteCounter';
-// import './BlogCard.css';
 
+/** component that displays basic information about a blog post on the homepage */
 class BlogCard extends Component {
 
   shouldComponentUpdate(nextProps) {

@@ -1,7 +1,16 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL ? `${process.env.REACT_APP_BASE_URL}api/posts` : 'http://localhost:5000/api/posts';
+const BASE_URL = process.env.REACT_APP_BASE_URL ? 
+    `${process.env.REACT_APP_BASE_URL}api/posts` : 
+    'http://localhost:5000/api/posts';
+
+
+/**
+ * class used to simplify calls to the backend API - methods return objects
+ */
+
 class Api {
+
 
     static async getPostTitles() {
         const res = await axios.get(`${BASE_URL}`);

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addPostToApi, editPostInApi } from './actions';
-// import './BlogPostForm.css';
 
+/** component that serves the purpose of adding and/or editing a blog post */
 class BlogPostForm extends Component {
+  // default props provided as values for an add form 
   static defaultProps={
     post:{
       title: '',
@@ -46,11 +47,12 @@ class BlogPostForm extends Component {
     }
   }
 
+  // canceling an edit hides the edit form 
   showCancelEdit() {
     return <button className="m-1 btn btn-secondary"
                    onClick={this.props.handleResetView}>Cancel</button>
   }
-
+  // canceling an add redirects to home page 
   showCancelAdd() {
     return <Link className="m-1 btn btn-secondary"to='/'>Cancel</Link>
   }

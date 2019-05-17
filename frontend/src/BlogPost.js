@@ -9,8 +9,8 @@ import { deletePostFromApi,
          updateVoteToApi,
          addPostToSeen,
          deletePostFromSeen } from './actions';
-// import './BlogCard.css';
 
+/** component that displays a blog post's details, comments, and an edit form */
 class BlogPost extends Component {
 
   constructor(props) {
@@ -25,7 +25,7 @@ class BlogPost extends Component {
   }
 
   /**
-   * populate post in redux state with object received from api
+   * populate post in redux store with object received from api
    */
 
   async componentDidMount() {
@@ -52,7 +52,7 @@ class BlogPost extends Component {
   }
 
   /**
-   * delete post from backend and redux state
+   * delete post from backend and redux store
    * redirect to homepage
    */
 
@@ -71,7 +71,7 @@ class BlogPost extends Component {
           ?
           "Loading..."
           :
-          this.state.showEditForm?
+          this.state.showEditForm ?
             <BlogPostForm
             id={id}
             handleResetView={this.toggleEditView} />

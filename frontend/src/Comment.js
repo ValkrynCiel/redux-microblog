@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+/** component that displays text of a comment with a delete button */
 class Comment extends Component {
 
   constructor(props) {
